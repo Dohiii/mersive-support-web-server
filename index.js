@@ -10,7 +10,7 @@ const { pushLicenseController } = require('./controllers/mainController');
 const JSZip = require('jszip');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT | 3000
 
 app.use(cors({ origin: "*" }));
 app.use(fileUpload());
@@ -113,17 +113,17 @@ app.post('/upload', async (req, res) => {
 
         console.log(response.status);
         console.log(responseData.message);
-        
+
         if (responseData.passwordRequired === true) {
-            res.status(400).send({status: 400, message: "Please provide a password"});
+            res.status(400).send({ status: 400, message: "Please provide a password" });
             return;
         }
 
         if (response.status === 200) {
-            res.status(200).send({status: response.status, message: responseData.message});
+            res.status(200).send({ status: response.status, message: responseData.message });
         }
 
-        if (responseData.message === "timeout of 5000ms exceeded"){
+        if (responseData.message === "timeout of 5000ms exceeded") {
             console.log(response.status)
             console.log(response)
         }
@@ -132,12 +132,12 @@ app.post('/upload', async (req, res) => {
 
         if (error.message && error.message === "timeout of 5000ms exceeded") {
             console.error("Error first catch:", error.message);
-            res.status(400).send({status: 400, message: "timeout of 5000ms exceeded"});
+            res.status(400).send({ status: 400, message: "timeout of 5000ms exceeded" });
             return;
         }
 
         console.error("Error last catch:", error.message);
-        res.status(200).send({status: 400, message: "socket hangs up"});
+        res.status(200).send({ status: 400, message: "socket hangs up" });
     }
 });
 
