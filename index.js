@@ -24,52 +24,6 @@ app.get('/ping', async (req, res) => {
     res.status(200).send({ status: 200, message: "pong" });
 })
 
-// app.post('/download-license', async (req, res) => {
-//     try {
-//         const { deviceIds } = req.body;
-//         console.log('Received deviceIds:', deviceIds);
-
-//         // Add quotes around each hexadecimal value
-//         const correctedStr = deviceIds.replace(/([a-fA-F0-9]+)/g, '"$1"');
-
-//         // Parse the corrected string into a JavaScript array
-//         const resultArray = JSON.parse(correctedStr);
-
-//         let zip = new JSZip();
-//         const contents = [];
-
-//         const URL = "https://kepler-backend.mersive.com:443/licensing/v1";
-//         const headers = {
-//             "Content-Type": "application/json",
-//             "accept": "application/json"
-//         };
-
-//         for (const deviceId of resultArray) {
-//             const licenseJson = { "keplerId": deviceId };
-
-//             const response = await axios.post(`${URL}/license/license`, licenseJson, { headers });
-
-
-//             const content = await response.data.text;
-//             contents.push({ deviceId, content });
-//         }
-
-//         for (const { deviceId, content } of contents) {
-//             zip.file(`${deviceId}.bin`, content);
-//         }
-
-//         const zipFilename = "license.zip";
-//         const zipBlob = await zip.generateAsync({ type: "nodebuffer" });
-
-//         await writeFile(zipFilename, zipBlob); // Use fs.promises.writeFile
-
-//         res.json({ success: true, message: "License successfully downloaded", filename: zipFilename, file: zipBlob });
-//     } catch (error) {
-//         console.error('Error:', error.message);
-//         res.status(500).json({ success: false, message: 'Internal server error' });
-//     }
-// });
-
 // Handle file upload
 app.post('/upload', async (req, res) => {
     try {
@@ -147,5 +101,5 @@ app.post('/upload', async (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on PORT: ${port}`);
 });
