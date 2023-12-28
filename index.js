@@ -10,7 +10,7 @@ const { pushLicenseController } = require('./controllers/mainController');
 const JSZip = require('jszip');
 
 const app = express();
-const port = process.env.PORT | 3000
+const port = process.env.PORT | 8080
 
 app.use(cors({ origin: "*" }));
 app.use(fileUpload());
@@ -19,6 +19,10 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded data
 
 // Define a route that uses the controller
 app.get('/', pushLicenseController);
+
+app.get('/ping', async (req, res) => {
+    res.status(200).send({ status: 200, message: "pong" });
+})
 
 // app.post('/download-license', async (req, res) => {
 //     try {
