@@ -10,7 +10,7 @@ const { pushLicenseController } = require('./controllers/mainController');
 const JSZip = require('jszip');
 
 const app = express();
-const port = process.env.PORT | 8080
+const port = 8080
 
 app.use(cors({ origin: "*" }));
 app.use(fileUpload());
@@ -64,7 +64,7 @@ app.post('/upload', async (req, res) => {
                 ...formData.getHeaders(),
             },
             httpsAgent: new https.Agent({ rejectUnauthorized: false }),
-            timeout: 5000, // Set a timeout in milliseconds (5 seconds in this case)
+            timeout: 10000, // Set a timeout in milliseconds (5 seconds in this case)
         });
 
         const responseData = response.data;
@@ -91,7 +91,6 @@ app.post('/upload', async (req, res) => {
         if (error.message && error.message === "timeout of 5000ms exceeded") {
             console.error("Error first catch:", error.message);
             res.status(400).send({ status: 400, message: "timeout of 5000ms exceeded" });
-            return;
         }
 
         console.error("Error last catch:", error.message);
